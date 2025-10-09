@@ -18,18 +18,19 @@ async function store(req, res) {
     return res.status(400).json({ message: "Faltan datos" });
   }
   // Buscar usuario por email
-  const user = await User.findOne({ email });
+  const user = await user.findOne({ email });
   if (!user) {
     return res.status(401).json({ message: "Credenciales inválidas" });
   }
 
-  const match = await bcrypt.compare(password, hashedPassword);
-  if (!match) {
+  const matchP = await bcrypt.compare(password, hashedPassword);
+  if (!matchP) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
+  return res.status(200).json({ message: "Login exitoso" });
 
   // Lógica para crear un nuevo token.
-  res.status(201).json({ message: "Token created successfully" });
+  //res.status(201).json({ message: "Token created successfully" });
 }
 
 // Otros handlers...
