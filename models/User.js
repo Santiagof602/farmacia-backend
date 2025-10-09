@@ -25,42 +25,40 @@ class User extends Model {
             isEmail: true,
           },
         },
-      password: {
+        password: {
           type: DataTypes.STRING,
           allowNull: false,
           validate: {
-            len: [6, 100]
+            len: [6, 100],
           },
         },
         role: {
-          type: DataTypes.ENUM('admin', 'user'),
-          defaultValue: 'user',
+          type: DataTypes.ENUM("admin", "user"),
+          defaultValue: "user",
           allowNull: false,
-          },
-          
-        }
-      ,
+        },
+      },
       {
         sequelize,
         modelName: "user", // Nombre del modelo en singular y en minúscula.
         paranoid: true, // Habilita el borrado lógico (soft delete).
-        hooks: { 
+        hooks: {
           beforeCreate: async (user) => {
             user.password = user.password.toLowerCase();
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(user.password, salt);
           },
           beforeUpdate: async (user) => {
-            if (user.changed('password')) {
+            if (user.changed("password")) {
               user.password = user.password.toLowerCase();
               const salt = await bcrypt.genSalt(10);
-              user.password = await bcrypt.hash(user.password, salt); 
+              user.password = await bcrypt.hash(user.password, salt);
             }
-          }
+          },
         },
         // timestamps: true, // Habilita las marcas de tiempo (createdAt, updatedAt).
         // underscored: true, // Usa snake_case para los nombres de las columnas.
-      }
+      },
     );
     return User;
   }
