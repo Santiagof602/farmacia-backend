@@ -5,6 +5,7 @@
 
 const userRoutes = require("./userRoutes");
 const articleRoutes = require("./articleRoutes");
+const categoryRoutes = require("./categoryRoutes");
 const exampleRoutes = require("./exampleRoutes");
 const tokenRoutes = require("./tokenRoutes");
 
@@ -21,6 +22,7 @@ module.exports = (app) => {
    */
   app.use("/users", userRoutes);
   app.use("/articles", articleRoutes);
+  app.use("/categories", categoryRoutes);
   app.use("/examples", exampleRoutes);
   app.use("/tokens", tokenRoutes);
 };
