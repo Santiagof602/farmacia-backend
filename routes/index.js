@@ -21,6 +21,7 @@ module.exports = (app) => {
    * se deberían agrupar bajo la URL `/articles` (en inglés y en plural).
    */
   app.use("/users", userRoutes);
+  router.post("/auth", authController.login);
   app.use("/articles", articleRoutes);
   app.use("/categories", categoryRoutes);
   app.use("/examples", exampleRoutes);
