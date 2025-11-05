@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const exampleController = require("../controllers/tokenController");
+const tokenController = require("../controllers/tokenController");
 
 /*
  * En general, para cada recurso (o entidad) de la API REST se tienen estos

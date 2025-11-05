@@ -24,6 +24,9 @@ module.exports = async () => {
     users.push({
       firstname: faker.person.firstName(),
       lastname: faker.person.lastName(),
+      email: faker.internet.email(),
+      password: "password123",
+      role: "user",
     });
   }
 
