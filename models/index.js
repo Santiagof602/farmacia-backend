@@ -14,21 +14,35 @@ const sequelize = new Sequelize(
 // Requerir todos los modelos:
 const User = require("./User");
 const Article = require("./Article");
+const Order = require("./Order");
+const OrderItem = require("./OrderItem");
 
 // Inicializar todos los modelos:
 User.initModel(sequelize);
 Article.initModel(sequelize);
+Order.initModel(sequelize);
+OrderItem.initModel(sequelize);
 
 /*
- * Luego de definir los modelos, se pueden establecer relaciones entre los
- * mismos (usando métodos como belongsTo, hasMany y belongsToMany)...
- *
- * Por ejemplo, si un User está relacionado con un Article, establecerlo
- * aquí abajo.
+ * Relaciones entre modelos
  */
+
+// Un User puede tener muchas Orders
+User.hasMany(Order, { foreignKey: 'userId' });
+Order.belongsTo(User, { foreignKey: 'userId' });
+
+// Una Order puede tener muchos OrderItems
+Order.hasMany(OrderItem, { foreignKey: 'orderId' });
+OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
+
+// Un Article puede estar en muchos OrderItems
+Article.hasMany(OrderItem, { foreignKey: 'articleId' });
+OrderItem.belongsTo(Article, { foreignKey: 'articleId' });
 
 module.exports = {
   sequelize,
   User,
   Article,
+  Order,
+  OrderItem,
 };

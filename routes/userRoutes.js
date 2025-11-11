@@ -9,6 +9,8 @@ const userController = require("../controllers/userController");
  * tal como se definió en el archivo `routes/index.js`.
  */
 
+router.post("/login", userController.login);
+router.post("/register", userController.store);
 router.get("/", userController.index);
 router.post("/", userController.store);
 router.get("/:id", userController.show);

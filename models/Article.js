@@ -9,11 +9,28 @@ class Article extends Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        title: {
+        name: {
           type: DataTypes.STRING,
+          allowNull: false,
         },
-        content: {
+        description: {
           type: DataTypes.TEXT,
+        },
+        price: {
+          type: DataTypes.DECIMAL(10, 2),
+          allowNull: false,
+        },
+        image: {
+          type: DataTypes.STRING,
+          defaultValue: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200',
+        },
+        stock: {
+          type: DataTypes.INTEGER,
+          defaultValue: 0,
+        },
+        category: {
+          type: DataTypes.ENUM('Medicamentos', 'Cuidado Personal', 'Suplementos', 'Otros'),
+          defaultValue: 'Otros',
         },
       },
       {

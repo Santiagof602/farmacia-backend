@@ -4,28 +4,25 @@
  *
  * El nombre "seeder" es una convención y significa "semillero".
  *
- * Además, en este caso, se está usando una librería llamada Faker
- * (https://fakerjs.dev/) para facilitar la creación de datos ficticios como
- * nombres, apellidos, títulos, direcciones y demás textos.
- *
- * Suele ser común que en los seeders exista un `for` donde se define la
- * cantidad de registros de prueba que se insertarán en la base de datos.
- * En este ejemplo se están insertando 500 artículos con textos ficticios.
+ * En este ejemplo se está insertando UN producto de ejemplo para mostrar
+ * cómo funciona el sistema de compras.
  */
 
-const faker = require("@faker-js/faker").fakerES;
 const { Article } = require("../models");
 
 module.exports = async () => {
-  const articles = [];
-
-  for (let i = 0; i < 500; i++) {
-    articles.push({
-      title: faker.lorem.sentence(5),
-      content: faker.lorem.paragraphs(),
-    });
-  }
+  // Crear 1 producto de ejemplo
+  const articles = [
+    {
+      name: "Paracetamol 500mg",
+      description: "Analgésico y antipirético de uso común. Indicado para dolores leves a moderados y fiebre. Caja de 20 comprimidos.",
+      price: 150.00,
+      image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400",
+      stock: 50,
+      category: "Medicamentos"
+    }
+  ];
 
   await Article.bulkCreate(articles);
-  console.log("[Database] Se corrió el seeder de Articles.");
+  console.log("[Database] Se corrió el seeder de Articles - 1 producto de ejemplo creado.");
 };
