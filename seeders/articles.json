@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Paracetamol 500mg",
+    "description": "Analgésico y antipirético. Caja de 20 comprimidos.",
+    "price": 150.0,
+    "image": "",
+    "stock": 50,
+    "category": "Medicamentos"
+  },
+  {
+    "name": "Ibuprofeno 400mg",
+    "description": "Antiinflamatorio y analgésico. Caja de 16 comprimidos.",
+    "price": 180.0,
+    "image": "",
+    "stock": 40,
+    "category": "Medicamentos"
+  },
+  {
+    "name": "Vitamina C 1000mg",
+    "description": "Tabletas efervescentes para reforzar defensas. Frasco de 30 unidades.",
+    "price": 420.5,
+    "image": "",
+    "stock": 60,
+    "category": "Suplementos"
+  },
+  {
+    "name": "Proteína Whey 1kg",
+    "description": "Suplemento proteico sabor vainilla.",
+    "price": 2800.0,
+    "image": "",
+    "stock": 20,
+    "category": "Suplementos"
+  },
+  {
+    "name": "Shampoo Suave 250ml",
+    "description": "Shampoo para uso diario, formulado para cuero cabelludo sensible.",
+    "price": 320.0,
+    "image": "",
+    "stock": 35,
+    "category": "Cuidado Personal"
+  },
+  {
+    "name": "Crema Hidratante 200ml",
+    "description": "Hidratación diaria para piel sensible.",
+    "price": 320.5,
+    "image": "",
+    "stock": 30,
+    "category": "Cuidado Personal"
+  },
+  {
+    "name": "Pasta Dental Anticaries 90g",
+    "description": "Protección anticaries con fluor. Tubo de 90 g.",
+    "price": 145.0,
+    "image": "",
+    "stock": 80,
+    "category": "Cuidado Personal"
+  },
+  {
+    "name": "Jarabe para la Tos 120ml",
+    "description": "Jarabe expectorante para alivio de la tos.",
+    "price": 250.0,
+    "image": "",
+    "stock": 25,
+    "category": "Medicamentos"
+  },
+  {
+    "name": "Termómetro Digital",
+    "description": "Termómetro digital de lectura rápida.",
+    "price": 950.0,
+    "image": "",
+    "stock": 15,
+    "category": "Otros"
+  },
+  {
+    "name": "Multivitamínico Adultos",
+    "description": "Complejo multivitamínico para toma diaria. Frasco de 60 cápsulas.",
+    "price": 780.0,
+    "image": "",
+    "stock": 45,
+    "category": "Suplementos"
+  }
+]

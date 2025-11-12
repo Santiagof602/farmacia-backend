@@ -8,21 +8,34 @@
  * cómo funciona el sistema de compras.
  */
 
+const fs = require("fs").promises;
+const path = require("path");
 const { Article } = require("../models");
 
 module.exports = async () => {
-  // Crear 1 producto de ejemplo
-  const articles = [
-    {
-      name: "Paracetamol 500mg",
-      description: "Analgésico y antipirético de uso común. Indicado para dolores leves a moderados y fiebre. Caja de 20 comprimidos.",
-      price: 150.00,
-      image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400",
-      stock: 50,
-      category: "Medicamentos"
-    }
-  ];
+  try {
+    const filePath = path.resolve(__dirname, "articles.json");
+    const content = await fs.readFile(filePath, "utf8");
+    const articles = JSON.parse(content);
 
-  await Article.bulkCreate(articles);
-  console.log("[Database] Se corrió el seeder de Articles - 1 producto de ejemplo creado.");
+    if (!Array.isArray(articles) || articles.length === 0) {
+      console.log("[Seeder] articles.json está vacío o no es un array. Nada que insertar.");
+      return;
+    }
+
+    await Article.bulkCreate(articles);
+    console.log(
+      `[Database] Se corrió el seeder de Articles - ${articles.length} producto(s) creado(s).`,
+    );
+  } catch (error) {
+    console.error("[Seeder] Error al leer o insertar artículos:", error);
+  }
 };
+
+// Permite ejecutar el seeder directamente: node seeders/articleSeeder.js
+if (require.main === module) {
+  module.exports().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

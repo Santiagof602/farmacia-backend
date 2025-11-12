@@ -6,15 +6,19 @@
  */
 
 const { User } = require("../models");
+const bcrypt = require("bcrypt");
 
 module.exports = async () => {
-  // Crear 1 usuario de prueba
+  // Hash the password
+  const hashedPassword = await bcrypt.hash("12345678", 10);
+
+  // Create test user
   const users = [
     {
       firstname: "Usuario",
       lastname: "Prueba",
       email: "test@farmauy.com",
-      password: "12345678", // NOTA: En producción usar bcrypt.hash
+      password: hashedPassword,
       role: "user"
     }
   ];
