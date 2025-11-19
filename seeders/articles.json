@@ -1,82 +1,106 @@
 [
   {
     "name": "Paracetamol 500mg",
-    "description": "Analgésico y antipirético. Caja de 20 comprimidos.",
+    "description": "Analgésico y antipirético de acción rápida. Ideal para aliviar dolores de cabeza, muscular y fiebre. Caja de 20 comprimidos. Tomar cada 4-6 horas según sea necesario.",
     "price": 150.0,
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde0b?w=300",
     "stock": 50,
     "category": "Medicamentos"
   },
   {
     "name": "Ibuprofeno 400mg",
-    "description": "Antiinflamatorio y analgésico. Caja de 16 comprimidos.",
+    "description": "Antiinflamatorio y analgésico potente. Efectivo para aliviar dolores articulares, menstruales y de cabeza. Caja de 16 comprimidos. Consumir con alimentos.",
     "price": 180.0,
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1631549916768-4873f991f397?w=300",
     "stock": 40,
     "category": "Medicamentos"
   },
   {
     "name": "Vitamina C 1000mg",
-    "description": "Tabletas efervescentes para reforzar defensas. Frasco de 30 unidades.",
+    "description": "Tabletas efervescentes para reforzar defensas y sistema inmunológico. Sabor naranja agradable. Frasco de 30 unidades. Disolva una tableta en agua.",
     "price": 420.5,
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1585794033829-f51bbba0dffb?w=300",
     "stock": 60,
     "category": "Suplementos"
   },
   {
     "name": "Proteína Whey 1kg",
-    "description": "Suplemento proteico sabor vainilla.",
+    "description": "Suplemento proteico de alta calidad sabor vainilla. Ideal para ganancia muscular y recuperación post-entrenamiento. Contiene 24g de proteína por porción.",
     "price": 2800.0,
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=300",
     "stock": 20,
     "category": "Suplementos"
   },
   {
     "name": "Shampoo Suave 250ml",
-    "description": "Shampoo para uso diario, formulado para cuero cabelludo sensible.",
+    "description": "Shampoo dermatológico para uso diario, especialmente formulado para cuero cabelludo sensible e irritado. Limpia suavemente sin resecar.",
     "price": 320.0,
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300",
     "stock": 35,
     "category": "Cuidado Personal"
   },
   {
     "name": "Crema Hidratante 200ml",
-    "description": "Hidratación diaria para piel sensible.",
+    "description": "Crema hidratante de rápida absorción para piel sensible y seca. Contiene aloe vera y vitamina E. Uso diurno y nocturno.",
     "price": 320.5,
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300",
     "stock": 30,
     "category": "Cuidado Personal"
   },
   {
     "name": "Pasta Dental Anticaries 90g",
-    "description": "Protección anticaries con fluor. Tubo de 90 g.",
+    "description": "Pasta dental con flúor de máxima concentración para protección anticaries. Formula refrescante con menta natural. Tubo de 90g. Uso 2 veces diarias.",
     "price": 145.0,
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=300",
     "stock": 80,
     "category": "Cuidado Personal"
   },
   {
     "name": "Jarabe para la Tos 120ml",
-    "description": "Jarabe expectorante para alivio de la tos.",
+    "description": "Jarabe expectorante natural con propiedades antitusivas. Alivia la tos productiva y despeja las vías respiratorias. Frasco de 120ml. Tomar 10ml cada 4-6 horas.",
     "price": 250.0,
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1587854692152-cbe660dbde0b?w=300",
     "stock": 25,
     "category": "Medicamentos"
   },
   {
     "name": "Termómetro Digital",
-    "description": "Termómetro digital de lectura rápida.",
+    "description": "Termómetro digital infrarrojo de lectura rápida y precisa. Resultados en menos de 1 segundo. Ideal para uso familiar. Baterías incluidas.",
     "price": 950.0,
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=300",
     "stock": 15,
     "category": "Otros"
   },
   {
     "name": "Multivitamínico Adultos",
-    "description": "Complejo multivitamínico para toma diaria. Frasco de 60 cápsulas.",
+    "description": "Complejo multivitamínico completo con 12 vitaminas y minerales esenciales. Fórmula potenciada para energía y vitalidad diaria. Frasco de 60 cápsulas vegetales.",
     "price": 780.0,
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1585794033829-f51bbba0dffb?w=300",
     "stock": 45,
+    "category": "Suplementos"
+  },
+  {
+    "name": "Antiacido Efervescente",
+    "description": "Tabletas efervescentes para alivio rápido de acidez y agruras. Acción en 5 minutos. Frasco de 20 unidades. Disuelve en agua.",
+    "price": 280.0,
+    "image": "https://images.unsplash.com/photo-1631549916768-4873f991f397?w=300",
+    "stock": 55,
+    "category": "Medicamentos"
+  },
+  {
+    "name": "Desinfectante de Manos 500ml",
+    "description": "Gel desinfectante con 70% alcohol. Mata 99.9% de bacterias y virus. Uso sin enjuague. Fragancia agradable a aloe vera.",
+    "price": 180.0,
+    "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300",
+    "stock": 70,
+    "category": "Cuidado Personal"
+  },
+  {
+    "name": "Melatonina 5mg",
+    "description": "Suplemento natural para mejorar la calidad del sueño. Tabletas de liberación prolongada. Frasco de 30 unidades. Tomar 30 minutos antes de dormir.",
+    "price": 650.0,
+    "image": "https://images.unsplash.com/photo-1585794033829-f51bbba0dffb?w=300",
+    "stock": 38,
     "category": "Suplementos"
   }
 ]

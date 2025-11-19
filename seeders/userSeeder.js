@@ -23,6 +23,14 @@ module.exports = async () => {
     }
   ];
 
-  await User.bulkCreate(users);
-  console.log("[Database] Se corrió el seeder de Users - 1 usuario de prueba creado.");
+  for (const u of users) {
+    const [user, created] = await User.findOrCreate({ where: { email: u.email }, defaults: u });
+    if (created) {
+      console.log(`[Database] Usuario creado: ${u.email}`);
+    } else {
+      console.log(`[Database] Usuario existente: ${u.email}`);
+    }
+  }
+
+  console.log("[Database] Se corrió el seeder de Users (idempotente).");
 };

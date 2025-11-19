@@ -12,6 +12,7 @@ class Article extends Model {
         name: {
           type: DataTypes.STRING,
           allowNull: false,
+          unique: true,
         },
         description: {
           type: DataTypes.TEXT,
@@ -28,9 +29,9 @@ class Article extends Model {
           type: DataTypes.INTEGER,
           defaultValue: 0,
         },
-        category: {
-          type: DataTypes.ENUM('Medicamentos', 'Cuidado Personal', 'Suplementos', 'Otros'),
-          defaultValue: 'Otros',
+        categoryId: {
+          type: DataTypes.BIGINT.UNSIGNED,
+          allowNull: true,
         },
       },
       {

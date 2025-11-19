@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const articleController = require("../controllers/articleController");
+const { validateCreateArticle, validateUpdateArticle } = require("../middlewares/validateArticle");
 
 /*
  * API endpoints relacionados a los artículos.
@@ -10,9 +11,9 @@ const articleController = require("../controllers/articleController");
  */
 
 router.get("/", articleController.index);
-router.post("/", articleController.store);
+router.post("/", validateCreateArticle, articleController.store);
 router.get("/:id", articleController.show);
-router.patch("/:id", articleController.update);
+router.patch("/:id", validateUpdateArticle, articleController.update);
 router.delete("/:id", articleController.destroy);
 
 module.exports = router;

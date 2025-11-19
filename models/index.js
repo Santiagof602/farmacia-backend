@@ -14,12 +14,14 @@ const sequelize = new Sequelize(
 // Requerir todos los modelos:
 const User = require("./User");
 const Article = require("./Article");
+const Category = require("./Category");
 const Order = require("./Order");
 const OrderItem = require("./OrderItem");
 
 // Inicializar todos los modelos:
 User.initModel(sequelize);
 Article.initModel(sequelize);
+Category.initModel(sequelize);
 Order.initModel(sequelize);
 OrderItem.initModel(sequelize);
 
@@ -39,10 +41,15 @@ OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
 Article.hasMany(OrderItem, { foreignKey: 'articleId' });
 OrderItem.belongsTo(Article, { foreignKey: 'articleId' });
 
+// Categorías
+Category.hasMany(Article, { foreignKey: 'categoryId' });
+Article.belongsTo(Category, { foreignKey: 'categoryId' });
+
 module.exports = {
   sequelize,
   User,
   Article,
+  Category,
   Order,
   OrderItem,
 };

@@ -10,7 +10,7 @@
 
 const fs = require("fs").promises;
 const path = require("path");
-const { Article } = require("../models");
+const { Article, Category } = require("../models");
 
 module.exports = async () => {
   try {
@@ -23,9 +23,26 @@ module.exports = async () => {
       return;
     }
 
-    await Article.bulkCreate(articles);
+    // Map category name -> categoryId
+    const categories = await Category.findAll();
+    const map = {};
+    categories.forEach(c => { map[c.name] = c.id; });
+
+    const prepared = articles.map(a => ({
+      name: a.name,
+      description: a.description || null,
+      price: a.price,
+      image: a.image || null,
+      stock: a.stock || 0,
+      categoryId: map[a.category] || null,
+    }));
+
+    for (const article of prepared) {
+      await Article.findOrCreate({ where: { name: article.name }, defaults: article });
+    }
+
     console.log(
-      `[Database] Se corrió el seeder de Articles - ${articles.length} producto(s) creado(s).`,
+      `[Database] Se corrió el seeder de Articles - ${prepared.length} producto(s) procesado(s) (idempotente).`,
     );
   } catch (error) {
     console.error("[Seeder] Error al leer o insertar artículos:", error);

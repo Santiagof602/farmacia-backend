@@ -1,0 +1,95 @@
+Notas rápidas de testeo y recordatorio
+
+- Probar en Postman:
+  - GET http://localhost:3000/articles -> devuelve todos los artículos (ahora con categoryId)
+  - GET http://localhost:3000/articles/:id -> detalle de artículo
+  - POST http://localhost:3000/articles -> crear artículo
+    - Campos: name (string), price (number, max 2 decimales), stock (int), image (url opcional), categoryId (int opcional)
+  - POST inválido ejemplos:
+    - price con más de 2 decimales -> debe devolver 400 (validación de precio)
+    - name duplicado -> debe devolver 400 (validación de unicidad en app)
+    - categoryId inexistente -> debe devolver 400 (validación existencia categoría)
+
+- Probar en TablePlus:
+  - SELECT id, name, categoryId, price, stock FROM articles; -> revisar categoryId asignado
+  - SELECT id, name FROM categories; -> revisar que existan las categorías
+  - Ver duplicados: SELECT name, COUNT(*) FROM articles GROUP BY name HAVING COUNT(*) > 1;
+
+- Advertencias importantes:
+  - El modelo `Article.name` tiene `unique: true` en el modelo, pero la constraint en la base de datos solo existirá si recreás las tablas o añadís un índice único manualmente.
+    - Opción segura: crear una migración o ejecutar ALTER TABLE para añadir un índice único (recomendado si querés preservar datos).
+    - Opción destructiva: ejecutar `npm run tables` (ejecuta createDatabaseTables.js con sync({ force: true })) que borra todos los datos y recrea tablas con los nuevos constraints.
+
+- Siguientes pasos recomendados:
+  1) Verificar que las categorías fueron creadas (ejecutar el seeder de categories o `npm run seeders`).
+  2) Testear creación de artículos con categoryId correcto en Postman.
+  3) Considerar añadir UI de administración para crear/editar categorías (dashboard).
+
+- Otros apuntes:
+  - Si necesitas que el endpoint devuelva la categoria con nombre en el artículo, podemos actualizar el controlador `index` y `show` para `include: Category`.
+  - Para producción, añadir sanitización XSS en campos de texto y rate-limiting.
+
+Guardá esto como referencia antes de ejecutar acciones destructivas.
+
+----------------------------------------------------------------------------------------------
+
+PENDIENTES / TODO
+
+FASE 2 - CRUD Artículos
+✅ GET /articles (listar todos)
+✅ GET /articles/:id (detalle)
+✅ POST /articles (crear con validaciones)
+✅ PATCH /articles/:id (actualizar)
+✅ DELETE /articles/:id (eliminar)
+
+FASE 3 - Validaciones
+✅ name: obligatorio, 3-100 caracteres, único
+✅ price: obligatorio, número con máx 2 decimales, > 0
+✅ stock: opcional, entero >= 0
+✅ categoryId: validar existencia en tabla categories
+✅ description: opcional, máx 500 caracteres
+✅ image: opcional, URL válida
+✅ Middleware de error centralizado (errorHandler.js)
+
+FASE 4 - Seeders
+✅ articleSeeder.js (13 productos con categoryId)
+✅ categorySeeder.js (4 categorías)
+✅ userSeeder.js (usuario test)
+
+FASE 5 - Categorías
+✅ Modelo Category creado
+✅ Relación Article belongsTo Category
+✅ Validación de categoryId en POST/PATCH
+⏳ CRUD para Categories (endpoints GET/POST/PATCH/DELETE /categories)
+⏳ Listar artículos por categoría (GET /articles?categoryId=X)
+⏳ Endpoint que retorne Category con nombre en artículo (include: Category)
+
+FASE 6 - Usuarios + Autenticación (NO INICIADA)
+⏳ Crear modelo User + campos necesarios (si no existe completo)
+⏳ Hash de contraseña (bcrypt - ya instalado)
+⏳ Registro (POST /users/register)
+⏳ Login (POST /users/login) con JWT
+⏳ Middleware verificarToken
+⏳ Middleware verificarRolAdmin
+⏳ Proteger endpoints de creación/edición/borrado de artículos (solo admin)
+
+FASE 7 - Ventas / Control de stock (NO INICIADA)
+⏳ Modelo Order + OrderItem
+⏳ POST /orders (crear venta, decrementar stock)
+⏳ GET /orders (listar ventas)
+⏳ Validación: stock >= cantidad vendida
+⏳ Transacciones DB para garantizar atomicidad
+
+FASE 8 - Dashboard Admin (NO INICIADA - FRONTEND)
+⏳ UI para crear/editar/eliminar artículos
+⏳ UI para crear/editar categorías
+⏳ UI para ver ventas/reportes
+⏳ Protección de rutas (solo admin)
+
+NOTAS TÉCNICAS IMPORTANTES
+- Base de datos: MySQL (conf. en .env)
+- BD actual probablemente tiene datos viejos; si necesitas un clean slate:
+  - Opción 1 (safe): Ejecutar migrateAddTables.js (sync({ alter: true })) - preserva datos
+  - Opción 2 (clean): Ejecutar npm run tables (sync({ force: true })) - borra todo
+- Constraint UNIQUE en Article.name ya está en la DB (creado con migrate o sync)
+- Seeders son idempotentes (pueden ejecutarse múltiples veces sin duplicados)

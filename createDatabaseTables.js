@@ -18,8 +18,19 @@ require("dotenv").config();
 const db = require("./models");
 
 async function createDatabaseTables() {
+  console.log("\n⚠️  [ADVERTENCIA] ⚠️");
+  console.log("Se procederá a RECREAR todas las tablas de la base de datos.");
+  console.log("❌ TODOS LOS DATOS EXISTENTES SERÁN ELIMINADOS ❌\n");
+  console.log("Si deseas preservar los datos, cancela este proceso (Ctrl+C) ahora.\n");
+  
+  // Esperar 3 segundos para que el usuario pueda leer el mensaje
+  await new Promise(resolve => setTimeout(resolve, 3000));
+
+  console.log("Proceediendo con la recreación de tablas...\n");
+  
   await db.sequelize.sync({ force: true });
   console.log("[Database] ¡Las tablas fueron creadas!");
+  console.log("[Database] Se agregó constraint UNIQUE en field 'name' de tabla 'articles'.");
   process.exit();
 }
 
