@@ -3,7 +3,9 @@ const { Article } = require("../models");
 // Display a listing of the resource.
 async function index(req, res) {
   try {
-    const articles = await Article.findAll();
+    const articles = await Article.findAll({
+      include: [{ model: require("../models").Category }] // Incluir categoría en la respuesta
+    });
     res.json(articles);
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener artículos', error: error.message });
@@ -13,7 +15,9 @@ async function index(req, res) {
 // Display the specified resource.
 async function show(req, res) {
   try {
-    const article = await Article.findByPk(req.params.id);
+    const article = await Article.findByPk(req.params.id, {
+      include: [{ model: require("../models").Category }] // Incluir categoría en la respuesta
+    });
 
     if (!article) {
       return res.status(404).json({ message: 'Artículo no encontrado' });

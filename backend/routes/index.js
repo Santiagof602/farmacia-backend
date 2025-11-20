@@ -5,7 +5,7 @@
 
 const userRoutes = require("./userRoutes");
 const articleRoutes = require("./articleRoutes");
-const orderRoutes = require("./orderRoutes");
+const categoryRoutes = require("./categoryRoutes");
 const exampleRoutes = require("./exampleRoutes");
 
 module.exports = (app) => {
@@ -21,6 +21,7 @@ module.exports = (app) => {
    */
   app.use("/users", userRoutes);
   app.use("/articles", articleRoutes);
-  app.use("/orders", orderRoutes);
+  app.use("/categories", categoryRoutes);
   app.use("/examples", exampleRoutes);
+  // TODO: Implementar /orders después de verificar que /articles y /categories funcionan
 };

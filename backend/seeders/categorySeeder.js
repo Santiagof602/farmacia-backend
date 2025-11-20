@@ -6,7 +6,8 @@ module.exports = async () => {
       { name: 'Medicamentos', description: 'Productos farmacéuticos y medicamentos' },
       { name: 'Cuidado Personal', description: 'Cosmética y artículos de higiene personal' },
       { name: 'Suplementos', description: 'Vitaminas y suplementos nutricionales' },
-      { name: 'Otros', description: 'Productos varios' },
+      { name: 'Ofertas', description: 'Productos en promoción y descuento' },
+      { name: 'Otros', description: 'Productos varios (uso futuro)' },
     ];
 
     for (const cat of categories) {

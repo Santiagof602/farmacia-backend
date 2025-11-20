@@ -10,6 +10,11 @@ app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date() });
+});
+
 routes(app);
 
 // Middleware de manejo de errores (debe ir después de las rutas)

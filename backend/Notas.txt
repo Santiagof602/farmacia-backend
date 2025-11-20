@@ -1,6 +1,38 @@
-Notas rápidas de testeo y recordatorio
+Notas rápidas de testeo y recordatorio (ACTUALIZADO 2025-11-20)
 
-- Probar en Postman:
+## ESTADO ACTUAL - VERIFICADO ✅
+- ✅ Servidor Express corriendo en http://localhost:3000
+- ✅ Base de datos MySQL (farmacia_db) conectada y funcional
+- ✅ Postman: todos los endpoints responden correctamente
+- ✅ TablePlus: visualiza BD con relaciones Article↔Category
+- ✅ node_modules: reinstalados y sin errores
+- ✅ Rutas: todas configuradas correctamente en backend/
+
+## PRUEBAS EN POSTMAN
+- GET http://localhost:3000/articles -> devuelve 13 artículos ✅
+- GET http://localhost:3000/articles/1 -> detalle funcionando ✅
+- POST http://localhost:3000/articles -> crear artículo funciona
+- PATCH http://localhost:3000/articles/:id -> actualizar funciona
+- DELETE http://localhost:3000/articles/:id -> eliminar funciona
+
+## ESTRUCTURA ACTUAL
+```
+farmacia-backend/
+├── backend/                    (Proyecto Express.js)
+│   ├── server.js
+│   ├── .env (configuración)
+│   ├── models/                 (User, Article, Category, Order, OrderItem)
+│   ├── controllers/            (articleController, userController, etc)
+│   ├── routes/                 (rutas organizadas por recurso)
+│   ├── middlewares/            (validateArticle, errorHandler)
+│   ├── seeders/                (datos de prueba: 13 artículos, 4 categorías, 1 usuario)
+│   ├── public/                 (archivos estáticos)
+│   └── node_modules/           (dependencias)
+├── FrontFarmacia/              (Frontend React - NUEVO)
+├── .env.example
+├── .gitignore
+└── .prettierrc
+```
   - GET http://localhost:3000/articles -> devuelve todos los artículos (ahora con categoryId)
   - GET http://localhost:3000/articles/:id -> detalle de artículo
   - POST http://localhost:3000/articles -> crear artículo
@@ -59,19 +91,37 @@ FASE 4 - Seeders
 FASE 5 - Categorías
 ✅ Modelo Category creado
 ✅ Relación Article belongsTo Category
-✅ Validación de categoryId en POST/PATCH
-⏳ CRUD para Categories (endpoints GET/POST/PATCH/DELETE /categories)
-⏳ Listar artículos por categoría (GET /articles?categoryId=X)
-⏳ Endpoint que retorne Category con nombre en artículo (include: Category)
+✅ Validación de categoryId en POST/PATCH (articles)
+✅ Seeders de 5 categorías ejecutados (Medicamentos, Cuidado Personal, Suplementos, Ofertas, Otros)
+✅ CRUD para Categories COMPLETADO:
+   ✅ GET /categories - lista todas las categorías
+   ✅ GET /categories/:id - obtiene una categoría por ID
+   ✅ POST /categories - crear nueva categoría con validaciones
+   ✅ PATCH /categories/:id - actualizar categoría
+   ✅ DELETE /categories/:id - eliminar categoría (previene si tiene artículos)
+✅ Validaciones para categorías (nombre único, 3-100 caracteres)
+✅ GET /articles devuelve cada artículo CON su categoría incluida
+✅ GET /articles/:id devuelve artículo CON su categoría incluida
+✅ Frontend puede agrupar artículos por categoría sin problema
+✅ Verificado: Postman + TablePlus + Node.js scripts
 
-FASE 6 - Usuarios + Autenticación (NO INICIADA)
-⏳ Crear modelo User + campos necesarios (si no existe completo)
-⏳ Hash de contraseña (bcrypt - ya instalado)
-⏳ Registro (POST /users/register)
-⏳ Login (POST /users/login) con JWT
-⏳ Middleware verificarToken
-⏳ Middleware verificarRolAdmin
-⏳ Proteger endpoints de creación/edición/borrado de artículos (solo admin)
+FASE 5.1 - Filtrado por Categoría (PENDIENTE - Próximos días)
+⏳ Implementar query parameter: GET /articles?categoryId=X
+⏳ Backend: filtrar artículos por categoryId en el controlador
+⏳ Frontend: agregar botones/selector de categoría
+⏳ Frontend: consumir endpoint con parámetro y actualizar UI
+⏳ Nota: no es excluyente con la opción 2 implementada; ambas se complementan
+
+
+FASE 6 - Usuarios + Autenticación (COMPLETADO ✅)
+✅ Modelo User ya existe con campos necesarios
+✅ Contraseña hasheada con bcrypt en registro
+✅ Registro (POST /users/register) genera JWT automáticamente
+✅ Login (POST /users/login) retorna JWT si credenciales son correctas
+✅ Middleware authenticateToken implementado (middlewares/authJWT.js)
+✅ Rutas protegidas: GET/PATCH/DELETE de usuarios requieren JWT
+⏳ Middleware verificarRolAdmin (pendiente para endpoints admin)
+⏳ Proteger endpoints de artículos/categorías solo para admin (pendiente)
 
 FASE 7 - Ventas / Control de stock (NO INICIADA)
 ⏳ Modelo Order + OrderItem

@@ -49,16 +49,19 @@ async function store(req, res) {
       return res.status(409).json({ message: 'El email ya está registrado' });
     }
 
-    // Crear usuario (en producción, hashear la contraseña con bcrypt)
+    // Hashear la contrasea
+    const bcrypt = require('bcrypt');
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     const user = await User.create({
       firstname,
       lastname,
       email,
-      password, // NOTA: En producción, usar bcrypt.hash(password, 10)
+      password: hashedPassword,
       role: 'user'
     });
 
-    // Retornar usuario sin contraseña
     const userResponse = {
       id: user.id,
       firstname: user.firstname,
@@ -67,9 +70,15 @@ async function store(req, res) {
       role: user.role,
     };
 
+    // Generar JWT
+    const { JWT_SECRET } = require('../middlewares/authJWT');
+    const jwt = require('jsonwebtoken');
+    const token = jwt.sign(userResponse, JWT_SECRET, { expiresIn: '2h' });
+
     res.status(201).json({
       message: 'Usuario creado exitosamente',
-      user: userResponse
+      user: userResponse,
+      token
     });
   } catch (error) {
     res.status(500).json({ message: 'Error al crear usuario', error: error.message });
@@ -135,12 +144,13 @@ async function login(req, res) {
       return res.status(401).json({ message: 'Credenciales inválidas' });
     }
 
-    // Verificar contraseña (en producción usar bcrypt.compare)
-    if (user.password !== password) {
-      return res.status(401).json({ message: 'Credenciales inválidas' });
+    // Verificar contrasea con bcrypt
+    const bcrypt = require('bcrypt');
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(401).json({ message: 'Credenciales invlidas' });
     }
 
-    // Login exitoso - retornar usuario sin contraseña
     const userResponse = {
       id: user.id,
       firstname: user.firstname,
@@ -149,9 +159,15 @@ async function login(req, res) {
       role: user.role,
     };
 
+    // Generar JWT
+    const { JWT_SECRET } = require('../middlewares/authJWT');
+    const jwt = require('jsonwebtoken');
+    const token = jwt.sign(userResponse, JWT_SECRET, { expiresIn: '2h' });
+
     res.json({
       message: 'Login exitoso',
-      user: userResponse
+      user: userResponse,
+      token
     });
   } catch (error) {
     res.status(500).json({ message: 'Error en login', error: error.message });
