@@ -21,6 +21,14 @@ module.exports = async () => {
       password: hashedPassword,
       role: "user"
     }
+    ,
+    {
+      firstname: "Admin",
+      lastname: "Farmacia",
+      email: "admin@farmauy.com",
+      password: hashedPassword,
+      role: "admin"
+    }
   ];
 
   for (const u of users) {

@@ -51,86 +51,76 @@ async function show(req, res) {
 
 // Crear una nueva orden (compra)
 async function store(req, res) {
+  const { sequelize } = require('../models');
+  const t = await sequelize.transaction();
   try {
-    const { userId, items } = req.body;
     // items: [{ articleId, quantity }, ...]
+    const items = req.body.items;
+    let userId = req.body.userId;
+
+    // If authenticated, prefer token user id
+    if (req.user && req.user.id) {
+      userId = req.user.id;
+    }
 
     if (!userId || !items || items.length === 0) {
+      await t.rollback();
       return res.status(400).json({ message: 'userId e items son requeridos' });
     }
 
     // Verificar que el usuario existe
     const user = await User.findByPk(userId);
     if (!user) {
+      await t.rollback();
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
     let total = 0;
     const orderItemsData = [];
 
-    // Validar artículos y calcular total
+    // Validar artículos y calcular total (con bloqueo optimista)
     for (const item of items) {
-      const article = await Article.findByPk(item.articleId);
+      const article = await Article.findByPk(item.articleId, { transaction: t, lock: t.LOCK.UPDATE });
 
       if (!article) {
-        return res.status(404).json({
-          message: `Artículo con id ${item.articleId} no encontrado`
-        });
+        await t.rollback();
+        return res.status(404).json({ message: `Artículo con id ${item.articleId} no encontrado` });
       }
 
       if (article.stock < item.quantity) {
-        return res.status(400).json({
-          message: `Stock insuficiente para ${article.name}`
-        });
+        await t.rollback();
+        return res.status(400).json({ message: `Stock insuficiente para ${article.name}` });
       }
 
       const itemPrice = parseFloat(article.price);
       const itemTotal = itemPrice * item.quantity;
       total += itemTotal;
 
-      orderItemsData.push({
-        articleId: article.id,
-        quantity: item.quantity,
-        price: itemPrice
-      });
+      orderItemsData.push({ articleId: article.id, quantity: item.quantity, price: itemPrice });
     }
 
-    // Crear la orden
-    const order = await Order.create({
-      userId,
-      total,
-      status: 'pending'
-    });
+    // Crear la orden dentro de la transacción
+    const order = await Order.create({ userId, total, status: 'pending' }, { transaction: t });
 
-    // Crear los items de la orden
+    // Crear items y decrementar stock
     for (const itemData of orderItemsData) {
-      await OrderItem.create({
-        orderId: order.id,
-        ...itemData
-      });
+      await OrderItem.create({ orderId: order.id, ...itemData }, { transaction: t });
 
       // Actualizar stock
-      const article = await Article.findByPk(itemData.articleId);
-      await article.update({
-        stock: article.stock - itemData.quantity
-      });
+      const article = await Article.findByPk(itemData.articleId, { transaction: t, lock: t.LOCK.UPDATE });
+      await article.update({ stock: article.stock - itemData.quantity }, { transaction: t });
     }
+
+    await t.commit();
 
     // Obtener la orden completa con items
     const completeOrder = await Order.findByPk(order.id, {
-      include: [
-        {
-          model: OrderItem,
-          include: [Article]
-        }
-      ]
+      include: [{ model: OrderItem, include: [Article] }]
     });
 
-    res.status(201).json({
-      message: 'Orden creada exitosamente',
-      order: completeOrder
-    });
+    res.status(201).json({ message: 'Orden creada exitosamente', order: completeOrder });
   } catch (error) {
+    try { await t.rollback(); } catch (e) {}
     res.status(500).json({ message: 'Error al crear orden', error: error.message });
   }
 }
@@ -169,13 +159,18 @@ async function destroy(req, res) {
       return res.status(404).json({ message: 'Orden no encontrada' });
     }
 
+    // Authorization: allow owner or admin
+    const requesterId = req.user && req.user.id;
+    const requesterRole = req.user && req.user.role;
+    if (requesterRole !== 'admin' && requesterId !== order.userId) {
+      return res.status(403).json({ message: 'Acceso denegado: solo admin o propietario pueden cancelar la orden' });
+    }
+
     // Si la orden no ha sido pagada, devolver stock
     if (order.status === 'pending') {
       for (const item of order.orderItems) {
         const article = await Article.findByPk(item.articleId);
-        await article.update({
-          stock: article.stock + item.quantity
-        });
+        await article.update({ stock: article.stock + item.quantity });
       }
     }
 

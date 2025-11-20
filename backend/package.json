@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "tables": "node createDatabaseTables.js",
-    "seeders": "node seeders/runAllSeeders.js"
+    "seeders": "node seeders/runAllSeeders.js",
+    "test:admin": "node scripts/test_admin.js",
+    "test:orders": "node scripts/test_orders.js"
   },
   "keywords": [],
   "author": "Hack Academy",

@@ -56,6 +56,7 @@ farmacia-backend/
   1) Verificar que las categorías fueron creadas (ejecutar el seeder de categories o `npm run seeders`).
   2) Testear creación de artículos con categoryId correcto en Postman.
   3) Considerar añadir UI de administración para crear/editar categorías (dashboard).
+  4) Probar rutas protegidas con JWT (por ejemplo `GET /users` usando el header `Authorization: Bearer <token>`) - PENDIENTE
 
 - Otros apuntes:
   - Si necesitas que el endpoint devuelva la categoria con nombre en el artículo, podemos actualizar el controlador `index` y `show` para `include: Category`.
@@ -120,15 +121,43 @@ FASE 6 - Usuarios + Autenticación (COMPLETADO ✅)
 ✅ Login (POST /users/login) retorna JWT si credenciales son correctas
 ✅ Middleware authenticateToken implementado (middlewares/authJWT.js)
 ✅ Rutas protegidas: GET/PATCH/DELETE de usuarios requieren JWT
-⏳ Middleware verificarRolAdmin (pendiente para endpoints admin)
-⏳ Proteger endpoints de artículos/categorías solo para admin (pendiente)
+✅ Middleware `requireAdmin` implementado (middlewares/requireAdmin.js)
+✅ Proteger endpoints de artículos/categorías para admin (POST/PATCH/DELETE)
+✅ Seeder actualizado: se creó usuario admin `admin@farmauy.com` (contraseña: `12345678`) - idempotente
+Nota: ejecutá `npm run seeders` para asegurarte de que el usuario admin exista en tu DB local.
+VERIFICACIÓN PENDIENTE: La creación del usuario admin y la comprobación de permisos (login + accesos a rutas protegidas) quedan pendientes de validación manual por falta de tiempo.
 
 FASE 7 - Ventas / Control de stock (NO INICIADA)
-⏳ Modelo Order + OrderItem
-⏳ POST /orders (crear venta, decrementar stock)
-⏳ GET /orders (listar ventas)
-⏳ Validación: stock >= cantidad vendida
-⏳ Transacciones DB para garantizar atomicidad
+FASE 7 - Ventas / Control de stock (EN PROGRESO)
+✅ Modelos `Order` y `OrderItem` existentes
+✅ Endpoints implementados: `POST /orders`, `GET /orders`, `GET /orders/:id`, `PATCH /orders/:id`, `DELETE /orders/:id`
+✅ `POST /orders` ahora usa transacción para crear orden, crear `OrderItem`s y decrementar stock de artículos de forma atómica
+✅ Rutas de órdenes protegidas: crear/listar/mostrar requieren autenticación; actualizar/cancelar requieren rol `admin` (puede ajustarse)
+✅ Notas: Si la orden se cancela y estaba en `pending`, el stock se devuelve en `destroy`
+Próximos pasos pendientes:
+- Permitir que el propietario de la orden (user) también pueda cancelar su orden (actualmente solo admin)
+- Agregar validaciones de esquema para `items` en `POST /orders`
+- Añadir notificaciones / emails (opcional)
+
+PRUEBAS AUTOMATIZADAS / SCRIPTS DE TEST
+- `npm run test:admin` : Ejecuta `scripts/test_admin.js` — hace login con `admin@farmauy.com` y crea un artículo de prueba (usa `Authorization: Bearer <token>` internamente).
+- `npm run test:orders` : Ejecuta `scripts/test_orders.js` — hace login con `test@farmauy.com`, crea una orden y luego intenta cancelarla como propietario.
+
+Cómo ejecutar (PowerShell):
+```powershell
+cd "C:\Users\Dany\Desktop\desarrolloWeb\Segundo semestre\E-Commerce\farmacia-backend\backend"
+# Asegurate de levantar el servidor en otra terminal:
+npm start
+# En esta terminal ejecutar:
+npm run test:admin
+# o
+npm run test:orders
+```
+
+Notas:
+- Los scripts requieren que el servidor esté corriendo en `http://localhost:3000`.
+- Ejecutá `npm run seeders` si no tenés los usuarios/seeders cargados (admin y user de prueba).
+- Si necesitás ejecutar el servidor en background desde PowerShell, usá `Start-Job` (ver README.md para ejemplo).
 
 FASE 8 - Dashboard Admin (NO INICIADA - FRONTEND)
 ⏳ UI para crear/editar/eliminar artículos

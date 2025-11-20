@@ -1,0 +1,78 @@
+Mapa conceptual — `notasFront.txt`
+
+Objetivo: Mapear la lógica del backend a elementos UI y flujos en el frontend.
+
+1) Autenticación
+- Endpoints backend:
+	- POST /users/register -> crea usuario, devuelve token
+	- POST /users/login -> login, devuelve token
+- Front:
+	- Formulario Register (firstname, lastname, email, password)
+	- Formulario Login (email, password)
+	- Al recibir token: guardar en `localStorage` como `token` y en contexto global (AuthContext)
+	- Incluir header `Authorization: Bearer <token>` en llamadas protegidas
+
+2) Rutas / Permisos (Admin)
+- Backend: middleware `authenticateToken` y `requireAdmin` protege POST/PATCH/DELETE en /articles y /categories
+- Front:
+	- Mostrar botones Crear/Editar/Eliminar solo si `auth.user.role === 'admin'`
+	- Si el usuario no es admin, ocultar UI de administración
+
+3) Artículos
+- Backend:
+	- GET /articles -> devuelve lista con cada artículo incluyendo su `Category`
+	- GET /articles/:id -> detalle con Category
+	- POST /articles, PATCH /articles/:id, DELETE /articles/:id (admin)
+- Front:
+	- Lista de productos (cards) usando `GET /articles`
+	- Cada card muestra `name`, `price`, `stock`, `category.name`, `image`
+	- Página detalle `/articles/:id` usando `GET /articles/:id`
+	- Form admin para crear/editar artículo (envía token)
+	- Manejar validaciones en UI según reglas del backend (price max 2 decimales, name requerido, etc.)
+
+4) Filtrado por categoría (pendiente backend: PHASE 5.1)
+- UX:
+	- Selector de categoría o chips en la UI
+	- Al seleccionar: consultar `GET /articles?categoryId=X` (si backend lo soporta) o filtrar frontend si ya tienes todos los artículos
+
+5) Carrito y órdenes (PHASE 7 planificada)
+- Backend: endpoints Orders y OrderItem (implementados)
+- Front:
+	- CartContext para gestionar items, cantidades y total
+	- Checkout: POST /orders cuando esté disponible, manejar respuesta y actualizar stock en UI
+
+6) Manejo de errores y estado
+- Mostrar mensajes de error desde respuestas del backend (400/401/403/500)
+- Spinner/estado de carga en requests async
+- Redirigir a login si token expiró o 401
+
+7) Testing manual rápido (con Postman o UI)
+- Registrar usuario, login -> recibir token
+- Guardar token en UI y verificar que endpoints protegidos respondan
+- Probar admin login (`admin@farmauy.com`) y validar que UI muestre controles admin
+
+Guía rápida: Autenticación en Front
+
+1) `AuthContext` (en `src/contexts/AuthContext.jsx`)
+	- Provee: `user`, `token`, `loading`, `login()`, `register()`, `logout()`.
+	- Guarda el `token` en `localStorage` y mantiene `user` extraído del payload JWT.
+
+2) `services/api.js`
+	- Helper para llamadas fetch a `http://localhost:3000`.
+	- Incluye `Authorization: Bearer <token>` cuando el token está en `localStorage`.
+
+3) Cómo integrar en componentes
+	- En `main.jsx` (o App wrapper) envolver la app:
+		```jsx
+		<AuthProvider>
+			<App />
+		</AuthProvider>
+		```
+	- Usar `const { login, register, user } = useContext(AuthContext)` en los componentes de Login/Register.
+
+4) Probar flujo rápido (manual)
+	- Ejecutar backend (ver `backend/README.md`) y frontend (`npm run dev` en `FrontFarmacia`)
+	- Registrar usuario con el formulario o usar Postman
+	- Verificar `localStorage.token` y que la UI muestre estado autenticado
+
+Si querés, creo ahora los componentes `LoginForm.jsx` y `RegisterForm.jsx` y un `PrivateRoute`/guard simple.

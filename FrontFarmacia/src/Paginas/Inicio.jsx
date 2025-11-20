@@ -56,7 +56,7 @@ function Inicio() {
           <p className="text-center text-gray-600">
             📦 Mostrando {productos.length} producto(s) de ejemplo.
             <br />
-            Los alumnos pueden agregar más productos desde el backend.
+            
           </p>
         </div>
       )}

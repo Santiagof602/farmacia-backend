@@ -1,5 +1,75 @@
 ---
 
+### Usuario Admin (para testing)
+
+El seeder ahora crea un usuario admin de forma idempotente. Credenciales de prueba:
+
+- Email: `admin@farmauy.com`
+- Password: `12345678`
+
+Usá este usuario para probar endpoints protegidos por rol admin (crear/editar/eliminar artículos y categorías). Recordá ejecutar:
+
+```bash
+npm run seeders
+```
+
+## Comandos de testeo (rápidos)
+
+Estos comandos automatizan pruebas básicas del backend (login admin, crear artículo, crear/cancelar órdenes).
+
+- `npm run test:admin` — ejecuta `scripts/test_admin.js`: hace login con `admin@farmauy.com` y crea un artículo de prueba.
+- `npm run test:orders` — ejecuta `scripts/test_orders.js`: hace login con `test@farmauy.com`, crea una orden y luego la cancela (propietario).
+
+Recomendación (PowerShell):
+```powershell
+cd backend
+# Inicia el servidor (en otra terminal o background):
+npm start
+# En esta terminal ejecutá los tests:
+npm run test:admin
+# y/o
+npm run test:orders
+```
+
+Si preferís arrancar el servidor en background desde PowerShell (como lo hice yo durante las pruebas), podés usar:
+```powershell
+Start-Job -ScriptBlock { cd "C:\ruta\a\tu\proyecto\backend"; npm start }
+```
+
+Los scripts asumen que el servidor está corriendo en `http://localhost:3000` y que los seeders ya se ejecutaron (`npm run seeders`).
+
+### Configurar variables de entorno (.env)
+
+Para que tus compañeros puedan levantar el backend rápidamente, incluimos un archivo de ejemplo `.env.example` en `backend/`.
+
+Pasos:
+
+1. Copiar el archivo ejemplo a `.env`:
+
+```powershell
+cd backend
+copy .env.example .env
+```
+
+2. Editar `.env` y completar los valores según tu entorno local (usuario/contraseña de MySQL y `JWT_SECRET`).
+
+3. No subir el archivo `.env` al repositorio (ya está en `.gitignore`).
+
+Variables principales a completar:
+
+- `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` — para conectar a MySQL
+- `JWT_SECRET` — cadena secreta para firmar tokens (usar un valor seguro)
+
+4. Luego ejecutar:
+
+```powershell
+npm run seeders
+npm start
+```
+
+Con esto cualquier compañero podrá levantar la API localmente y usar el user admin de prueba.
+
+
 ## Guía rápida: Probar Login y Registro (Postman/curl)
 
 ### Registro de usuario
