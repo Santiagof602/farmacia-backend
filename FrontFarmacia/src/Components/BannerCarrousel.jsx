@@ -8,21 +8,21 @@ const BannerCarrousel = () => {
   const banners = [
     {
       id: 1,
-      image: 'https://cda-usa.com/wp-content/uploads/2023/04/Composition_produits_secteur_pharma_2-1.jpg', // Reemplazar Imagén
+      image: 'https://i.pinimg.com/736x/65/c8/33/65c83367be08401b52bfa39f058e51e7.jpg', // Reemplazar Imagén
       alt: 'Promoción 2x1 Maquillaje',
-      bgColor: 'bg-pink-200',
+      bgColor: 'bg-pink-400',
       link: '#'
     },
     {
       id: 2,
-      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200', // Reemplazar Imagén
+      image: 'https://www.hpshospitales.com/wp-content/uploads/2019/09/DR_6579-862x575.jpg', // Reemplazar Imagén
       alt: '15% OFF con Scotiabank',
       bgColor: 'bg-white',
       link: '#'
     },
     {
       id: 3,
-      image: 'https://laotracara.info/vistas/uploads/fotos/t1/cf2b58e99a1e1d3d7b3e869d842b9173.webp', // Reemplazar Imagén
+      image: 'https://www.nativacabal.com.uy/media/Farmacias-20042020_900x600.jpg', // Reemplazar Imagén
       alt: 'Envío gratis',
       bgColor: 'bg-blue-100',
       link: '#'
