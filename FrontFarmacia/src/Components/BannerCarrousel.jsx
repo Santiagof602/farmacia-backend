@@ -8,7 +8,7 @@ const BannerCarrousel = () => {
   const banners = [
     {
       id: 1,
-      image: '/api/placeholder/1200/300', // Reemplazar Imagén
+      image: 'https://cda-usa.com/wp-content/uploads/2023/04/Composition_produits_secteur_pharma_2-1.jpg', // Reemplazar Imagén
       alt: 'Promoción 2x1 Maquillaje',
       bgColor: 'bg-pink-200',
       link: '#'
@@ -22,7 +22,7 @@ const BannerCarrousel = () => {
     },
     {
       id: 3,
-      image: '/api/placeholder/1200/300', // Reemplazar Imagén
+      image: 'https://laotracara.info/vistas/uploads/fotos/t1/cf2b58e99a1e1d3d7b3e869d842b9173.webp', // Reemplazar Imagén
       alt: 'Envío gratis',
       bgColor: 'bg-blue-100',
       link: '#'

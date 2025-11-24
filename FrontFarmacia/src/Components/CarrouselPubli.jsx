@@ -12,9 +12,9 @@ const CarrouselPubli = () => {
       subtitle: '35% OFF en seleccionados',
       description: 'de cuidado capilar',
       buttonText: '¡Quiero!',
-      bgColor: 'bg-pink-200',
+      bgColor: 'bg-green-200',
       textColor: 'text-gray-900',
-      image: 'link_a_la_imagen_1' // Reemplazar con tu imagen
+      image: 'https://cda-usa.com/wp-content/uploads/2023/04/Composition_produits_secteur_pharma_2-1.jpg' // Reemplazar con tu imagen
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ const CarrouselPubli = () => {
       buttonText: 'Ver ofertas',
       bgColor: 'bg-blue-100',
       textColor: 'text-gray-900',
-      image: '/api/placeholder/400/300'
+      image: 'https://img.freepik.com/foto-gratis/medicamentos-suministros-medicos-colocados-azul_1150-19139.jpg?semt=ais_hybrid&w=740&q=80'
     },
     {
       id: 3,
@@ -34,7 +34,7 @@ const CarrouselPubli = () => {
       buttonText: 'Comprar ahora',
       bgColor: 'bg-green-100',
       textColor: 'text-gray-900',
-      image: '/api/placeholder/400/300'
+      image: 'https://laotracara.info/vistas/uploads/fotos/t1/cf2b58e99a1e1d3d7b3e869d842b9173.webp'
     }
   ];
 

@@ -11,7 +11,7 @@
     "name": "Ibuprofeno 400mg",
     "description": "Antiinflamatorio y analgésico potente. Efectivo para aliviar dolores articulares, menstruales y de cabeza. Caja de 16 comprimidos. Consumir con alimentos.",
     "price": 180.0,
-    "image": "https://images.unsplash.com/photo-1631549916768-4873f991f397?w=300",
+    "image": "https://www.farma.uy/media/catalog/product/cache/e0b246544c5debe1492c14d4616c54fd/a/2/a2c615a42a86439415c3346fd863c087285f3b7766b3b05a035ca0be384925c8.jpeg",
     "stock": 40,
     "category": "Medicamentos"
   },
@@ -19,7 +19,7 @@
     "name": "Vitamina C 1000mg",
     "description": "Tabletas efervescentes para reforzar defensas y sistema inmunológico. Sabor naranja agradable. Frasco de 30 unidades. Disolva una tableta en agua.",
     "price": 420.5,
-    "image": "https://images.unsplash.com/photo-1585794033829-f51bbba0dffb?w=300",
+    "image": "https://www.farma.uy/media/catalog/product/cache/e0b246544c5debe1492c14d4616c54fd/s/u/super-c-_ncpnqv7wdgk2mvsk.jpg",
     "stock": 60,
     "category": "Suplementos"
   },
@@ -27,15 +27,15 @@
     "name": "Proteína Whey 1kg",
     "description": "Suplemento proteico de alta calidad sabor vainilla. Ideal para ganancia muscular y recuperación post-entrenamiento. Contiene 24g de proteína por porción.",
     "price": 2800.0,
-    "image": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=300",
+    "image": "https://www.farma.uy/media/catalog/product/cache/e0b246544c5debe1492c14d4616c54fd/5/0/504a4f38716b994cab85e7f2b815c1206ef816e85e6f6194afe39c066e108e69.jpeg",
     "stock": 20,
     "category": "Suplementos"
   },
   {
-    "name": "Shampoo Suave 250ml",
+    "name": "Shampoo Suave 930ml",
     "description": "Shampoo dermatológico para uso diario, especialmente formulado para cuero cabelludo sensible e irritado. Limpia suavemente sin resecar.",
     "price": 320.0,
-    "image": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300",
+    "image": "https://http2.mlstatic.com/D_NQ_NP_2X_776402-MLU80948321886_122024-F.webp",
     "stock": 35,
     "category": "Cuidado Personal"
   },
